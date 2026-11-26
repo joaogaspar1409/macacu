@@ -1,7 +1,7 @@
 // ===== CONFIGURAÇÃO DO JOGO =====
 // 1) Número de localidades por partida
 window.JOGO_CONFIG = {
-  rodadas: 10,
+  rodadas: 20,
   // 2) Ranking online (Firebase – projeto "macacu", só deste jogo)
   firebase: {
     apiKey: "AIzaSyDIlZtEI46LhqPNlBNM0dL07xjYkJdoiIo",
