@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onde fica? – Desafio das Localidades | Atlas Macacu</title>
+<meta name="description" content="Jogo do Atlas Macacu: encontre no mapa as 61 localidades de Cachoeiras de Macacu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="faixa"></div>
+<div class="pagina">
+  <header class="topo">
+    <div class="aba">História · Bairros e localidades</div>
+    <div class="marca"><a href="https://atlasmacacu.com.br">Atlas Macacu</a></div>
+  </header>
+
+  <main class="conteudo">
+    <!-- TELA INICIAL -->
+    <section id="tela-inicio">
+      <h1 class="titulo">Onde <b>fica?</b></h1>
+      <p class="subtitulo">Desafio das Localidades de Cachoeiras de Macacu. O município é dividido em 61 localidades (Lei nº 2.428/2019). Você conhece todas?</p>
+      <div class="inicio">
+        <div class="caixa">
+          <h2>Como jogar</h2>
+          <div class="corpo">
+            <ol class="regras">
+              <li>A cada rodada aparece o <b>nome de uma localidade</b> e uma <b>dica</b>.</li>
+              <li><b>Clique no mapa</b> onde você acha que ela fica. Só vale um clique por rodada!</li>
+              <li>Se errar, a localidade certa pisca em amarelo para você aprender.</li>
+              <li>São <b id="n-rodadas">10</b> rodadas. O cronômetro corre durante todo o jogo.</li>
+              <li>No ranking, vence quem acerta mais. No empate, ganha quem foi mais rápido.</li>
+            </ol>
+            <label for="nome">Seu nome</label>
+            <input type="text" id="nome" maxlength="30" autocomplete="off" placeholder="Ex.: Ana Clara">
+            <label for="turma">Turma ou escola (opcional)</label>
+            <input type="text" id="turma" maxlength="30" autocomplete="off" placeholder="Ex.: 7º ano – E.M. Elias Faraht">
+            <div class="acoes">
+              <button class="botao" id="btn-jogar">Jogar</button>
+            </div>
+            <p class="aviso">Dica: use os botões + e − ou a roda do mouse para aproximar o mapa. Arraste para mover.</p>
+          </div>
+        </div>
+        <div class="caixa">
+          <h2>Ranking</h2>
+          <div class="corpo" id="ranking-inicio"><p class="vazio">Carregando…</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DO JOGO -->
+    <section id="tela-jogo" class="oculto">
+      <div class="jogo">
+        <div class="quadro-mapa" id="quadro-mapa">
+          <svg id="mapa" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa das localidades de Cachoeiras de Macacu"></svg>
+          <div class="zoom">
+            <button id="z-mais" title="Aproximar" aria-label="Aproximar">+</button>
+            <button id="z-menos" title="Afastar" aria-label="Afastar">−</button>
+            <button id="z-reset" title="Ver o município inteiro" aria-label="Ver o município inteiro">⤢</button>
+          </div>
+          <div class="escala" id="escala"></div>
+          <div class="norte"><svg width="22" height="30" viewBox="0 0 22 30" aria-hidden="true"><polygon points="11,0 20,26 11,20 2,26" fill="#1d1d1b"/><polygon points="11,0 11,20 2,26" fill="#fff" stroke="#1d1d1b" stroke-width="1"/></svg><div>N</div></div>
+        </div>
+        <aside class="painel">
+          <div class="bloco cab">
+            <div class="l1">Cachoeiras de Macacu</div>
+            <div class="l2">Localidades</div>
+          </div>
+          <div class="bloco inset" id="inset"></div>
+          <div class="bloco">
+            <div class="placar">
+              <div><div class="v" id="p-rodada">1/10</div><div class="k">Rodada</div></div>
+              <div><div class="v" id="p-acertos">0</div><div class="k">Acertos</div></div>
+              <div><div class="v" id="p-tempo">0:00</div><div class="k">Tempo</div></div>
+            </div>
+          </div>
+          <div class="bloco pergunta">
+            <div class="k">Encontre a localidade</div>
+            <div class="nome" id="q-nome">—</div>
+            <div class="dica" id="q-dica"></div>
+            <div class="retorno" id="q-retorno" aria-live="polite"></div>
+          </div>
+          <div class="bloco legenda-bloco">
+            <div class="leg-tit">Legenda</div>
+            <div class="legenda-itens">
+              <div><i style="background:var(--loc)"></i>Localidade</div>
+              <div><i style="background:var(--acerto)"></i>Você acertou</div>
+              <div><i style="background:var(--erro)"></i>Você errou</div>
+              <div><i style="background:var(--alvo)"></i>Localidade correta</div>
+              <div><i style="background:#fff;border:2px solid #1d1d1b"></i>Limite municipal</div>
+            </div>
+          </div>
+          <div class="bloco fonte">
+            Fonte dos dados: CIGEO/SEPLAGH – Prefeitura de Cachoeiras de Macacu (localidades, Lei nº 2.428/2019); IBGE (limites municipais, 2023); Atlas Macacu (2022).<br>Sistema de referência geodésica SIRGAS 2000/WGS 84.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TELA DE RESULTADO -->
+    <section id="tela-fim" class="oculto">
+      <h1 class="titulo">Fim de <b>jogo!</b></h1>
+      <div class="resultado">
+        <div class="caixa">
+          <h2>Seu resultado</h2>
+          <div class="corpo">
+            <div class="grande"><span id="r-acertos">0</span><small> / <span id="r-total">10</span> acertos</small></div>
+            <p>Tempo: <b id="r-tempo">0:00</b></p>
+            <p id="r-msg"></p>
+            <ul class="lista-res" id="r-lista"></ul>
+            <div class="acoes">
+              <button class="botao" id="btn-denovo">Jogar de novo</button>
+              <button class="botao secundario" id="btn-inicio">Início</button>
+            </div>
+            <p class="aviso" id="r-salvo"></p>
+          </div>
+        </div>
+        <div class="caixa">
+          <h2>Ranking</h2>
+          <div class="corpo" id="ranking-fim"><p class="vazio">Carregando…</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <span class="tit">ATLAS MACACU</span><span class="num">JOGO</span>
+  </footer>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/mapa.js"></script>
+<script src="js/dicas.js"></script>
+<script src="js/jogo.js" type="module"></script>
+</body>
+</html>

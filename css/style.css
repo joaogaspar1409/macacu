@@ -1,0 +1,145 @@
+/* Estética inspirada no Atlas Macacu (2022): faixa lateral e aba de seção,
+   tipografia geométrica (Gotham no Atlas; aqui Montserrat), mapas com moldura
+   preta e painel de legenda à direita, como nos mapas do CIGEO. */
+:root{
+  --azul:#6da7d3;      /* faixa da seção História */
+  --azul-claro:#a6e1e3;
+  --verde:#89ac58;     /* Patrimônios Municipais */
+  --verde-claro:#d9e3c1;
+  --ocre:#cab14a;      /* Formação Sócio-espacial */
+  --ocre-claro:#eee5be;
+  --tinta:#1d1d1b;
+  --cinza:#6f6f6e;
+  --papel:#ffffff;
+  --loc:#f3efd9;       /* preenchimento das localidades */
+  --loc-borda:#7a6a4f;
+  --acerto:#4f9a3a;
+  --erro:#c8413b;
+  --alvo:#f2b417;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  font-family:"Montserrat",system-ui,sans-serif;color:var(--tinta);background:var(--papel);
+  display:flex;min-height:100vh;
+}
+/* faixa lateral colorida, como nas páginas do Atlas */
+.faixa{width:22px;flex:0 0 22px;background:var(--azul)}
+.pagina{flex:1;display:flex;flex-direction:column;min-width:0}
+.topo{display:flex;align-items:stretch;justify-content:space-between;gap:12px;padding:0 18px 0 0}
+.aba{display:flex;align-items:center;gap:10px;background:var(--azul-claro);padding:8px 26px 8px 14px;
+  font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.aba::before{content:"";width:14px;height:14px;background:var(--tinta);display:inline-block}
+.marca{align-self:center;font-weight:800;letter-spacing:.12em;font-size:13px;text-transform:uppercase}
+.marca a{color:inherit;text-decoration:none}
+.conteudo{flex:1;padding:14px 18px 10px;min-height:0}
+.rodape{display:flex;justify-content:flex-end;align-items:center;gap:0;padding:0 0 0 18px}
+.rodape .tit{font-weight:800;font-size:12px;letter-spacing:.08em;padding:0 14px}
+.rodape .num{background:var(--tinta);color:#fff;font-weight:700;font-size:12px;padding:12px 16px}
+
+h1.titulo{font-weight:300;font-size:clamp(26px,4vw,44px);letter-spacing:.04em;margin:6px 0 4px;text-transform:uppercase}
+h1.titulo b{font-weight:800}
+.subtitulo{font-size:15px;color:var(--cinza);margin:0 0 18px;max-width:780px;line-height:1.5}
+
+/* ===== Tela inicial ===== */
+.inicio{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:28px;align-items:start}
+.caixa{border:2px solid var(--tinta);background:#fff}
+.caixa h2{margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;
+  padding:10px 14px;border-bottom:2px solid var(--tinta);background:var(--azul-claro)}
+.caixa .corpo{padding:14px}
+.regras{margin:0;padding-left:18px;line-height:1.6;font-size:14px}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:10px 0 4px}
+input[type=text]{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:2px solid var(--tinta);border-radius:0}
+input[type=text]:focus{outline:3px solid var(--azul);outline-offset:1px}
+.botao{font:inherit;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:14px;
+  background:var(--tinta);color:#fff;border:2px solid var(--tinta);padding:12px 20px;cursor:pointer;border-radius:0}
+.botao:hover{background:#fff;color:var(--tinta)}
+.botao.secundario{background:#fff;color:var(--tinta)}
+.botao.secundario:hover{background:var(--azul-claro)}
+.botao:disabled{opacity:.4;cursor:not-allowed}
+.acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.aviso{font-size:12px;color:var(--cinza);margin-top:8px;line-height:1.4}
+
+/* ===== Ranking ===== */
+table.ranking{width:100%;border-collapse:collapse;font-size:13px}
+.ranking th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--tinta);padding:6px 4px}
+.ranking td{padding:6px 4px;border-bottom:1px solid #ddd}
+.ranking td.n{width:28px;font-weight:800}
+.ranking td.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ranking tr.voce td{background:var(--alvo);font-weight:700}
+.ranking .turma{color:var(--cinza);font-size:11px;display:block}
+.vazio{font-size:13px;color:var(--cinza)}
+
+/* ===== Tela do jogo: mapa + painel de legenda ===== */
+.jogo{display:grid;grid-template-columns:minmax(0,1fr) 300px;border:2px solid var(--tinta);height:calc(100vh - 120px);min-height:520px}
+.quadro-mapa{position:relative;border-right:2px solid var(--tinta);overflow:hidden;background:#e9eee6;touch-action:none}
+.quadro-mapa svg{width:100%;height:100%;display:block;cursor:grab}
+.quadro-mapa svg.arrastando{cursor:grabbing}
+.vizinho{fill:#dfe3da;stroke:#a9ae9f;stroke-width:.8}
+.rot-vizinho{font-size:15px;fill:#8a8f82;font-weight:600;letter-spacing:.04em;pointer-events:none}
+.loc{fill:var(--loc);stroke:var(--loc-borda);stroke-width:.9;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .15s}
+@media (hover:hover){.loc:hover{fill:#fde8a0}}
+.loc.acerto{fill:var(--acerto)}
+.loc.erro{fill:var(--erro)}
+.loc.certa{fill:var(--alvo);animation:pisca .5s ease-in-out 4 alternate}
+.loc.feita{fill:#d6e7c9}
+.loc.feita-erro{fill:#f1cdc8}
+@keyframes pisca{from{fill:var(--alvo)}to{fill:#fff6d0}}
+.limite{fill:none;stroke:var(--tinta);stroke-width:2.4;vector-effect:non-scaling-stroke;pointer-events:none}
+.rotulo{font-size:12px;font-weight:700;fill:var(--tinta);paint-order:stroke;stroke:#fff;stroke-width:3px;text-anchor:middle;pointer-events:none}
+.grade text{font-size:10px;fill:var(--tinta)}
+.zoom{position:absolute;left:10px;top:10px;display:flex;flex-direction:column;gap:4px}
+.zoom button{width:34px;height:34px;font:inherit;font-weight:800;font-size:18px;background:#fff;border:2px solid var(--tinta);cursor:pointer}
+.zoom button:hover{background:var(--azul-claro)}
+.norte{position:absolute;right:12px;bottom:12px;background:rgba(255,255,255,.85);padding:6px 8px;text-align:center;font-size:11px;font-weight:800}
+.escala{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.85);padding:6px 8px;font-size:10px}
+.escala .barra{display:flex;height:6px;margin:3px 0}
+.escala .barra span{flex:1;border:1px solid var(--tinta)}
+.escala .barra span:nth-child(odd){background:var(--tinta)}
+.escala .nums{display:flex;justify-content:space-between}
+
+.painel{display:flex;flex-direction:column;min-height:0;overflow:auto;background:#fff}
+.painel .bloco{border-bottom:2px solid var(--tinta);padding:10px 12px}
+.painel .cab{text-align:center}
+.painel .cab .l1{font-size:14px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.painel .cab .l2{font-size:12px}
+.inset svg{width:100%;height:auto;display:block}
+.inset .estado{fill:#eee;stroke:#999;stroke-width:.6}
+.inset .cm{fill:var(--acerto);stroke:var(--tinta);stroke-width:.6}
+.inset .rot{font-size:9px;fill:#555}
+.leg-tit{font-weight:800;font-size:13px;text-align:center;margin-bottom:4px}
+.placar{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.placar div{text-align:center;flex:1}
+.placar .v{font-size:22px;font-weight:800}
+.placar .k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--cinza)}
+.pergunta .k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--cinza)}
+.pergunta .nome{font-size:22px;font-weight:800;text-transform:uppercase;line-height:1.15;margin:2px 0 8px}
+.pergunta .dica{font-size:13px;line-height:1.45;background:var(--ocre-claro);border-left:5px solid var(--ocre);padding:8px 10px}
+.pergunta .retorno{font-weight:800;margin-top:8px;min-height:1.2em}
+.pergunta .retorno.ok{color:var(--acerto)}
+.pergunta .retorno.no{color:var(--erro)}
+.legenda-itens div{display:flex;align-items:center;gap:8px;font-size:12px;margin:3px 0}
+.legenda-itens i{width:22px;height:13px;border:1px solid var(--loc-borda);display:inline-block}
+.fonte{font-size:10px;line-height:1.4;color:#444;text-align:center}
+
+/* ===== Resultado ===== */
+.resultado{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,1fr);gap:28px;align-items:start}
+.grande{font-size:56px;font-weight:800;line-height:1}
+.grande small{font-size:18px;font-weight:600;color:var(--cinza)}
+.lista-res{list-style:none;padding:0;margin:12px 0 0;font-size:13px;columns:2;column-gap:18px}
+.lista-res li{padding:3px 0;break-inside:avoid}
+.lista-res li::before{display:inline-block;width:18px;font-weight:800}
+.lista-res li.ok::before{content:"✓";color:var(--acerto)}
+.lista-res li.no::before{content:"✗";color:var(--erro)}
+
+.oculto{display:none!important}
+
+@media (max-width:860px){
+  .faixa{width:10px;flex-basis:10px}
+  .inicio,.resultado{grid-template-columns:1fr}
+  .jogo{grid-template-columns:1fr;grid-template-rows:auto minmax(380px,1fr);height:auto}
+  .quadro-mapa{border-right:none;border-top:2px solid var(--tinta);order:2;height:62vh}
+  .painel{order:1}
+  .painel .inset,.painel .fonte,.painel .legenda-bloco{display:none}
+  .lista-res{columns:1}
+}
