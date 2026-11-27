@@ -177,7 +177,7 @@ window.addEventListener("resize", atualizarEscala);
 let fila = [], rodada = 0, acertos = 0, inicio = 0, relogio = null, bloqueado = false, historico = [], jogador = {};
 
 function mostrar(tela) {
-  ["tela-inicio", "tela-jogo", "tela-fim"].forEach(t => $(t).classList.toggle("oculto", t !== tela));
+  ["tela-inicio", "tela-jogo", "tela-fim", "tela-ranking"].forEach(t => $(t).classList.toggle("oculto", t !== tela));
   window.scrollTo(0, 0);
   if (tela === "tela-jogo") requestAnimationFrame(atualizarEscala);
 }
@@ -266,10 +266,10 @@ async function terminar() {
   mostrarRanking("ranking-fim", meuId);
 }
 
-async function mostrarRanking(alvo, meuId) {
+async function mostrarRanking(alvo, meuId, limite = 15) {
   const box = $(alvo);
   try {
-    const lista = await listar(15);
+    const lista = await listar(limite);
     if (!lista.length) { box.innerHTML = '<p class="vazio">Ninguém jogou ainda. Seja o primeiro!</p>'; return; }
     box.innerHTML = `<table class="ranking"><thead><tr><th>#</th><th>Jogador</th><th class="r">Acertos</th><th class="r">Tempo</th></tr></thead><tbody>` +
       lista.map((r, i) => `<tr class="${r.id === meuId ? "voce" : ""}"><td class="n">${i + 1}º</td><td>${esc(r.nome)}${r.turma ? `<span class="turma">${esc(r.turma)}</span>` : ""}</td><td class="r">${r.acertos}/${r.total || N}</td><td class="r">${fmtFino(r.tempo)}</td></tr>`).join("") +
@@ -290,5 +290,7 @@ desenharMapa();
 $("btn-jogar").onclick = novoJogo;
 $("nome").addEventListener("keydown", e => { if (e.key === "Enter") novoJogo(); });
 $("btn-denovo").onclick = novoJogo;
-$("btn-inicio").onclick = () => { mostrar("tela-inicio"); mostrarRanking("ranking-inicio"); };
-mostrarRanking("ranking-inicio");
+$("btn-inicio").onclick = () => mostrar("tela-inicio");
+$("btn-ver-ranking").onclick = () => { mostrar("tela-ranking"); mostrarRanking("ranking-pagina", null, 30); };
+$("btn-rank-voltar").onclick = () => mostrar("tela-inicio");
+$("btn-rank-jogar").onclick = () => { mostrar("tela-inicio"); $("nome").focus(); };

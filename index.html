@@ -40,14 +40,25 @@
             <input type="text" id="turma" maxlength="30" autocomplete="off" placeholder="Ex.: 7º ano – E.M. Elias Faraht">
             <div class="acoes">
               <button class="botao" id="btn-jogar">Jogar</button>
+              <button class="botao secundario" id="btn-ver-ranking">Ver ranking</button>
             </div>
             <p class="aviso">Dica: use os botões + e − ou a roda do mouse para aproximar o mapa. Arraste para mover.</p>
           </div>
         </div>
-        <div class="caixa">
-          <h2>Ranking</h2>
-          <div class="corpo" id="ranking-inicio"><p class="vazio">Carregando…</p></div>
-        </div>
+      </div>
+    </section>
+
+    <!-- TELA DO RANKING -->
+    <section id="tela-ranking" class="oculto">
+      <h1 class="titulo"><b>Ranking</b></h1>
+      <p class="subtitulo">Vence quem acerta mais. No empate, ganha quem foi mais rápido.</p>
+      <div class="caixa ranking-caixa">
+        <h2>Melhores jogadores</h2>
+        <div class="corpo" id="ranking-pagina"><p class="vazio">Carregando…</p></div>
+      </div>
+      <div class="acoes">
+        <button class="botao" id="btn-rank-jogar">Jogar</button>
+        <button class="botao secundario" id="btn-rank-voltar">Voltar</button>
       </div>
     </section>
 

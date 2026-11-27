@@ -42,7 +42,8 @@ h1.titulo b{font-weight:800}
 .subtitulo{font-size:15px;color:var(--cinza);margin:0 0 18px;max-width:780px;line-height:1.5}
 
 /* ===== Tela inicial ===== */
-.inicio{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:28px;align-items:start}
+.inicio{max-width:760px}
+.ranking-caixa{max-width:760px}
 .caixa{border:2px solid var(--tinta);background:#fff}
 .caixa h2{margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;
   padding:10px 14px;border-bottom:2px solid var(--tinta);background:var(--azul-claro)}
